@@ -9,11 +9,31 @@
 </head>
 
 <body>
+ <!-- Trigger/Open The Modal -->
+ <div class="navbar">
+ <button class="btn azul" id="myBtn">OPCIONES</button>
+</div>
+ <!-- The Modal -->
+ <div id="myModal" class="modal">
+     <!-- Modal content -->
+     <div class="modal-content">
+         <span class="close">&times;</span>
+         <h2>CONFIGURACION</h2>
+         <div>
+             <span>Tiempo</span>
+             <input type="number" id="duracionRonda" size="3" step="1" value="45">s
+         </div>
+
+         <button class="btn naranja" onclick="guardarConfiguracion()">GUARDAR CONF</button>
+
+     </div>
+ </div>
+
   <div class="times-up">
     <h1 class="title">Time's Up</h1>
     <h2>RONDA: <span id="currentRound"></span>/3</h2>
     <div class="start-button-container">
-      <button class="start-button" onclick="startRound()">Comenzar juego</button>
+      <button class="btn verde" onclick="startRound()">Comenzar juego</button>
     </div>
     <div id="game-container" style="display: none;">
       <h1 class="team">TURNO DE: <span id="current-team"></span></h1>
@@ -23,11 +43,11 @@
       <div class="timer-container">
         <span class="timer" id="time-remaining"></span>
         <div id="botonesPlay">
-          <button class="next-button" onclick="nextWord()">Siguiente palabra</button>
-          <button class="correct-button" onclick="markCorrect()">Palabra correcta</button>
+          <button class="btn azul" onclick="nextWord()">Siguiente palabra</button>
+          <button class="btn naranja" onclick="markCorrect()">Palabra correcta</button>
         </div>
-        <button class="pause-button" onclick="togglePause()">Pausar</button>
-        <button id="nextRound" class="nextRound-button" onclick="nextRound()">Siguiente Ronda</button>
+        <button class="btn rojo" onclick="togglePause()">Pausar</button>
+        <button id="nextRound" class="btn verde" onclick="nextRound()">Siguiente Ronda</button>
       </div>
       <div class="score-container">
         <h2>Puntajes:</h2>

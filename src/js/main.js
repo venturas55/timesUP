@@ -1,4 +1,6 @@
 // Declaración de variables
+cargarConfiguracion();
+
 var gameStarted = false;
 var duracionRonda = 45;
 var currentTeam = '';
@@ -117,9 +119,22 @@ var wordsTotal = {
     "Cristóbal Colón"
   ]
 };
-let words=[];
-let wordsGameInitial=[];
-document.getElementById('nextRound').style.display = "none";
+let words = [];
+let wordsGameInitial = [];
+
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+var btn = document.getElementById("myBtn");
+
+modal.style.display = "none";
+
+btn.onclick = function () {
+  modal.style.display = "flex";
+}
+
+span.onclick = function () {
+  modal.style.display = "none";
+}
 
 //FUNCION PARA BARAJAR UN ARRAY
 const shuffleArray = array => {
@@ -132,7 +147,7 @@ const shuffleArray = array => {
 }
 
 //FUNCION PARA ESCOGER 20 CARTAS DE LAS 100
-function repartirCartas(){
+function repartirCartas() {
   let words = [];
   for (var i = 0; i < 10; i++) {
     words.push(wordsTotal.peliculas_series.splice(Math.floor(Math.random() * wordsTotal.peliculas_series.length), 1));
@@ -167,18 +182,18 @@ var nextButton = document.querySelector('.next-button');
 var correctButton = document.querySelector('.correct-button');
 var menuPlay = document.getElementById("botonesPlay");
 var nextRoundBtn = document.getElementById("nextRound");
-document.getElementById("currentRound").innerHTML=currentRound;
+document.getElementById("currentRound").innerHTML = currentRound;
 
-wordsGameInitial= repartirCartas();
-words= [...wordsGameInitial];
+wordsGameInitial = repartirCartas();
+words = [...wordsGameInitial];
 // Función para iniciar el juego
 function startRound() {
   //console.log(words);
   gameStarted = true;
   currentTeam = teams[0];
   currentWord = words[currentIndex];
-  document.getElementById("currentRound").innerHTML=currentRound;
-  if(currentRound==1){
+  document.getElementById("currentRound").innerHTML = currentRound;
+  if (currentRound == 1) {
     scores = teams.reduce(function (obj, team) {
       obj[team] = 0;
       return obj;
@@ -210,11 +225,11 @@ function startTimer() {
 // Función para avanzar a la siguiente palabra
 function nextWord() {
   //console.log(words.length);
-  if(words.length > 0) {
-  currentIndex=Math.floor(Math.random() * words.length);
-  currentWord = words[currentIndex];
-  document.getElementById('current-word').textContent = currentWord;
-  }else{
+  if (words.length > 0) {
+    currentIndex = Math.floor(Math.random() * words.length);
+    currentWord = words[currentIndex];
+    document.getElementById('current-word').textContent = currentWord;
+  } else {
     clearInterval(timerInterval);
     document.getElementById('current-word').textContent = "TIME`S UP";
     alert("Se acabo la ronda");
@@ -229,7 +244,7 @@ function nextTurn() {
   var currentIndex = teams.indexOf(currentTeam);
   var nextIndex = (currentIndex + 1) % teams.length;
   currentTeam = teams[nextIndex];
-  currentIndex=Math.floor(Math.random() * words.length);
+  currentIndex = Math.floor(Math.random() * words.length);
   currentWord = words[currentIndex];
   timeRemaining = duracionRonda;
   //startTimer();
@@ -260,10 +275,10 @@ function markCorrect() {
   //console.log(words);
   nextWord();
 }
-function nextRound(){
+function nextRound() {
   currentRound++;
   //iinicio la baraja
-  words=[...wordsGameInitial];
+  words = [...wordsGameInitial];
   //console.log(words);
   startRound();
 
@@ -288,3 +303,25 @@ function togglePause() {
     correctButton.disabled = false;
   }
 }
+
+
+//funcion para guardar la configuracion . Basicamente solo el tiempo actualmente.
+function guardarConfiguracion() {
+  var obj = {
+    duracionRonda,
+  };
+  localStorage.setItem("configuracion", JSON.stringify(obj));
+  console.log("guardado:" + JSON.stringify(obj));
+  modal.style.display = "none";
+}
+
+function cargarConfiguracion() {
+  var configuracion = localStorage.getItem("configuracion");
+  //console.log("Cargar:" + configuracion);
+  if (configuracion) {
+    var obj = JSON.parse(configuracion);
+    duracionRonda = obj.duracionRonda;
+  }
+}
+
+
