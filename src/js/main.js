@@ -186,6 +186,7 @@ words = [...wordsGameInitial];
 // Función para iniciar el juego
 function startRound() {
   console.log(words);
+  document.getElementById("logo").style.display = "none";
   gameStarted = true;
   currentTeam = teams[0];
   currentWord = words[currentIndex];
