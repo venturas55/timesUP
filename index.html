@@ -9,41 +9,64 @@
 </head>
 
 <body>
- <!-- Trigger/Open The Modal -->
- <div class="navbar">
- <button class="btn azul" id="myBtn">OPCIONES</button>
-</div>
- <!-- The Modal -->
- <div id="myModal" class="modal">
-     <!-- Modal content -->
-     <div class="modal-content">
-         <span class="close">&times;</span>
-         <h2>CONFIGURACION</h2>
-         <div>
-             <span>Tiempo</span>
-             <input type="number" id="duracionRonda" size="3" step="1" value="45">s
-         </div>
+  <!-- Trigger/Open The Modal -->
+  <div class="navbar">
+    <button class="btn azul" id="myBtn">OPCIONES</button>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>CONFIGURACION</h2>
+      <div>
+        <span>Tiempo</span>
+        <input type="number" id="duracionRonda" size="3" step="1" value="45">s
+      </div>
+      <div>
+        <span># cartas peliculas</span>
+        <input type="number" id="num_personajes_contemporaneos" size="3" step="1" value="10">
+      </div>
+      <div>
+        <span># cartas personajes contemporaneos</span>
+        <input type="number" id="num_personajes_contemporaneos" size="3" step="1" value="2">
+      </div>
+      <div>
+        <span># cartas personajes ficticios</span>
+        <input type="number" id="num_personajes_ficticios" size="3" step="1" value="2">
+      </div>
+      <div>
+        <span># cartas personajes historicos</span>
+        <input type="number" id="num_personajes_historicos" size="3" step="1" value="2">
+      </div>
+      <div>
+        <span># cartas artistas</span>
+        <input type="number" id="num_artistas" size="3" step="1" value="2">
+      </div>
+      <div>
+        <span># cartas deportistas</span>
+        <input type="number" id="num_deportistas" size="3" step="1" value="2">
+      </div>
 
-         <button class="btn naranja" onclick="guardarConfiguracion()">GUARDAR CONF</button>
-
-     </div>
- </div>
+      <button class="btn naranja" onclick="guardarConfiguracion()">GUARDAR CONF</button>
+    </div>
+  </div>
 
   <div class="times-up">
     <h1 class="title">Time's Up</h1>
     <h2>RONDA: <span id="currentRound"></span>/3</h2>
     <div class="start-button-container">
-      <button class="btn verde" onclick="startRound()">Comenzar juego</button>
+      <button class="btn verde start-button" onclick="startRound()">Comenzar juego</button>
     </div>
     <div id="game-container" style="display: none;">
       <h1 class="team">TURNO DE: <span id="current-team"></span></h1>
       <div id="ficha">
-      <h3 class="word"> <span id="current-word"></span></h3>
+        <h3 class="word"> <span id="current-word"></span></h3>
       </div>
       <div class="timer-container">
         <span class="timer" id="time-remaining"></span>
         <div id="botonesPlay">
-          <button class="btn azul" onclick="nextWord()">Siguiente palabra</button>
+          <button class="btn azul next-button" onclick="nextWord()">Siguiente palabra</button>
           <button class="btn naranja correct-button" onclick="markCorrect()">Palabra correcta</button>
         </div>
         <button class="btn rojo pause-button" onclick="togglePause()">Pausar</button>

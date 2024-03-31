@@ -1,8 +1,8 @@
 // Declaración de variables
 cargarConfiguracion();
-
 var gameStarted = false;
-var duracionRonda = 45;
+var duracionRonda=document.getElementById("duracionRonda").value;
+var num_peliculas_series=document.getElementById("duracionRonda").value, num_personajes_contemporaneos=document.getElementById("num_personajes_contemporaneos").value, num_personajes_ficticios=document.getElementById("num_personajes_ficticios").value , num_personajes_historicos=document.getElementById("num_personajes_historicos").value , num_artistas=document.getElementById("num_artistas").value , num_deportistas=document.getElementById("num_deportistas").value ;
 var currentTeam = '';
 var currentWord = '';
 var currentRound = 1;
@@ -125,13 +125,10 @@ let wordsGameInitial = [];
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 var btn = document.getElementById("myBtn");
-
-modal.style.display = "none";
-
+//modal.style.display = "none";
 btn.onclick = function () {
   modal.style.display = "flex";
 }
-
 span.onclick = function () {
   modal.style.display = "none";
 }
@@ -149,22 +146,22 @@ const shuffleArray = array => {
 //FUNCION PARA ESCOGER 20 CARTAS DE LAS 100
 function repartirCartas() {
   let words = [];
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < num_peliculas_series; i++) {
     words.push(wordsTotal.peliculas_series.splice(Math.floor(Math.random() * wordsTotal.peliculas_series.length), 1));
   }
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < num_personajes_contemporaneos; i++) {
     words.push(wordsTotal.personajes_contemporaneos.splice(Math.floor(Math.random() * wordsTotal.personajes_contemporaneos.length), 1));
   }
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < num_personajes_ficticios; i++) {
     words.push(wordsTotal.personajes_ficticios.splice(Math.floor(Math.random() * wordsTotal.personajes_ficticios.length), 1));
   }
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < num_personajes_historicos; i++) {
     words.push(wordsTotal.personajes_historicos.splice(Math.floor(Math.random() * wordsTotal.personajes_historicos.length), 1));
   }
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < num_artistas; i++) {
     words.push(wordsTotal.artistas.splice(Math.floor(Math.random() * wordsTotal.artistas.length), 1));
   }
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < num_deportistas; i++) {
     words.push(wordsTotal.deportistas.splice(Math.floor(Math.random() * wordsTotal.deportistas.length), 1));
   }
   shuffleArray(words);
@@ -188,7 +185,7 @@ wordsGameInitial = repartirCartas();
 words = [...wordsGameInitial];
 // Función para iniciar el juego
 function startRound() {
-  //console.log(words);
+  console.log(words);
   gameStarted = true;
   currentTeam = teams[0];
   currentWord = words[currentIndex];
@@ -209,7 +206,6 @@ function startRound() {
 
   updateScores();
 }
-
 // Función para iniciar el temporizador
 function startTimer() {
   timerInterval = setInterval(function () {
@@ -221,7 +217,6 @@ function startTimer() {
     document.getElementById('time-remaining').textContent = timeRemaining;
   }, 1000);
 }
-
 // Función para avanzar a la siguiente palabra
 function nextWord() {
   //console.log(words.length);
@@ -236,7 +231,6 @@ function nextWord() {
     nextRoundBtn.style.display = "block";
   }
 }
-
 // Función para avanzar al siguiente turno
 function nextTurn() {
   clearInterval(timerInterval);
@@ -252,7 +246,6 @@ function nextTurn() {
   document.getElementById('current-word').textContent = "TIME`S UP";
   updateScores();
 }
-
 // Función para actualizar los puntajes en la lista
 function updateScores() {
   var scoresList = document.getElementById('scores-list');
@@ -266,7 +259,6 @@ function updateScores() {
     scoresList.appendChild(scoreItem);
   });
 }
-
 // Función para marcar la palabra como correcta
 function markCorrect() {
   words.splice(currentIndex, 1);
@@ -283,7 +275,6 @@ function nextRound() {
   startRound();
 
 }
-
 // Función para pausar o reanudar el juego
 function togglePause() {
   paused = !paused;
@@ -303,25 +294,28 @@ function togglePause() {
     correctButton.disabled = false;
   }
 }
-
-
 //funcion para guardar la configuracion . Basicamente solo el tiempo actualmente.
 function guardarConfiguracion() {
   var obj = {
     duracionRonda,
+    num_peliculas_series, num_personajes_contemporaneos, num_personajes_ficticios, num_personajes_historicos, num_artistas, num_deportistas
   };
   localStorage.setItem("configuracion", JSON.stringify(obj));
   console.log("guardado:" + JSON.stringify(obj));
   modal.style.display = "none";
 }
-
+//funcion para cargar la configuracion .
 function cargarConfiguracion() {
   var configuracion = localStorage.getItem("configuracion");
   //console.log("Cargar:" + configuracion);
   if (configuracion) {
     var obj = JSON.parse(configuracion);
     duracionRonda = obj.duracionRonda;
+    num_peliculas_series = obj.num_peliculas_series,
+    num_personajes_contemporaneos = obj.num_personajes_contemporaneos,
+    num_personajes_ficticios = obj.num_personajes_ficticios,
+    num_personajes_historicos = obj.num_personajes_historicos,
+    num_artistas = obj.num_artistas,
+    num_deportistas = obj.num_deportistas
   }
 }
-
-
