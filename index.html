@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time's Up</title>
+  <link rel="stylesheet" href="./src/css/styles.css">
+</head>
+
+<body>
+  <div class="times-up">
+    <h1 class="title">Time's Up</h1>
+    <h2>RONDA: <span id="currentRound"></span>/3</h2>
+    <div class="start-button-container">
+      <button class="start-button" onclick="startRound()">Comenzar juego</button>
+    </div>
+    <div id="game-container" style="display: none;">
+      <h1 class="team">TURNO DE: <span id="current-team"></span></h1>
+      <div id="ficha">
+      <h3 class="word"> <span id="current-word"></span></h3>
+      </div>
+      <div class="timer-container">
+        <span class="timer" id="time-remaining"></span>
+        <div id="botonesPlay">
+          <button class="next-button" onclick="nextWord()">Siguiente palabra</button>
+          <button class="correct-button" onclick="markCorrect()">Palabra correcta</button>
+        </div>
+        <button class="pause-button" onclick="togglePause()">Pausar</button>
+        <button id="nextRound" class="nextRound-button" onclick="nextRound()">Siguiente Ronda</button>
+      </div>
+      <div class="score-container">
+        <h2>Puntajes:</h2>
+        <ul id="scores-list"></ul>
+      </div>
+    </div>
+
+    <script src="./src/js/main.js"></script>
+
+</html>
