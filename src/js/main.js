@@ -204,7 +204,6 @@ function startRound() {
   document.getElementById('current-team').textContent = currentTeam;
   document.getElementById('current-word').textContent = currentWord;
   document.getElementById('time-remaining').textContent = timeRemaining;
-
   updateScores();
 }
 // Función para iniciar el temporizador
