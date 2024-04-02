@@ -1,8 +1,8 @@
 // Declaración de variables
 cargarConfiguracion();
 var gameStarted = false;
-var duracionRonda=document.getElementById("duracionRonda").value;
-var num_peliculas_series=document.getElementById("duracionRonda").value, num_personajes_contemporaneos=document.getElementById("num_personajes_contemporaneos").value, num_personajes_ficticios=document.getElementById("num_personajes_ficticios").value , num_personajes_historicos=document.getElementById("num_personajes_historicos").value , num_artistas=document.getElementById("num_artistas").value , num_deportistas=document.getElementById("num_deportistas").value ;
+var duracionRonda = document.getElementById("duracionRonda").value;
+var num_peliculas_series = document.getElementById("num_peliculas_series").value, num_personajes_contemporaneos = document.getElementById("num_personajes_contemporaneos").value, num_personajes_ficticios = document.getElementById("num_personajes_ficticios").value, num_personajes_historicos = document.getElementById("num_personajes_historicos").value, num_artistas = document.getElementById("num_artistas").value, num_deportistas = document.getElementById("num_deportistas").value;
 var currentTeam = '';
 var currentWord = '';
 var currentRound = 1;
@@ -164,7 +164,6 @@ function repartirCartas() {
   for (var i = 0; i < num_deportistas; i++) {
     words.push(wordsTotal.deportistas.splice(Math.floor(Math.random() * wordsTotal.deportistas.length), 1));
   }
-  shuffleArray(words);
   return words;
 }
 
@@ -185,26 +184,30 @@ wordsGameInitial = repartirCartas();
 words = [...wordsGameInitial];
 // Función para iniciar el juego
 function startRound() {
-  console.log(words);
-  document.getElementById("logo").style.display = "none";
-  gameStarted = true;
-  currentTeam = teams[0];
-  currentWord = words[currentIndex];
-  document.getElementById("currentRound").innerHTML = currentRound;
-  if (currentRound == 1) {
-    scores = teams.reduce(function (obj, team) {
-      obj[team] = 0;
-      return obj;
-    }, {});
+  if (currentRound <= 3) {
+
+    shuffleArray(words);
+    console.log(words);
+    document.getElementById("logo").style.display = "none";
+    gameStarted = true;
+    currentTeam = teams[0];
+    currentWord = words[currentIndex];
+    document.getElementById("currentRound").innerHTML = currentRound;
+    if (currentRound == 1) {
+      scores = teams.reduce(function (obj, team) {
+        obj[team] = 0;
+        return obj;
+      }, {});
+    }
+    startTimer();
+    nextRoundBtn.style.display = "none";
+    document.getElementById('game-container').style.display = 'block';
+    document.getElementById('current-team').textContent = currentTeam;
+    document.getElementById('current-word').textContent = currentWord;
+    document.getElementById('time-remaining').textContent = timeRemaining;
+    updateScores();
   }
 
-  startTimer();
-  nextRoundBtn.style.display = "none";
-  document.getElementById('game-container').style.display = 'block';
-  document.getElementById('current-team').textContent = currentTeam;
-  document.getElementById('current-word').textContent = currentWord;
-  document.getElementById('time-remaining').textContent = timeRemaining;
-  updateScores();
 }
 // Función para iniciar el temporizador
 function startTimer() {
@@ -227,24 +230,29 @@ function nextWord() {
   } else {
     clearInterval(timerInterval);
     document.getElementById('current-word').textContent = "TIME`S UP";
-    alert("Se acabo la ronda");
+    alert("Se acabaron las cartas");
+    nextButton.style.display = "none";
+    correctButton.style.display = "none";
+    pauseButton.style.display = "none";
     nextRoundBtn.style.display = "block";
   }
 }
 // Función para avanzar al siguiente turno
 function nextTurn() {
-  clearInterval(timerInterval);
-  togglePause();
-  var currentIndex = teams.indexOf(currentTeam);
-  var nextIndex = (currentIndex + 1) % teams.length;
-  currentTeam = teams[nextIndex];
-  currentIndex = Math.floor(Math.random() * words.length);
-  currentWord = words[currentIndex];
-  timeRemaining = duracionRonda;
-  //startTimer();
-  document.getElementById('current-team').textContent = currentTeam;
-  document.getElementById('current-word').textContent = "TIME`S UP";
-  updateScores();
+    clearInterval(timerInterval);
+    togglePause();
+    var currentIndex = teams.indexOf(currentTeam);
+    var nextIndex = (currentIndex + 1) % teams.length;
+    currentTeam = teams[nextIndex];
+    currentIndex = Math.floor(Math.random() * words.length);
+    currentWord = words[currentIndex];
+    timeRemaining = document.getElementById("duracionRonda").value;
+    //startTimer();
+    document.getElementById('current-team').textContent = currentTeam;
+    document.getElementById('current-word').textContent = "TIME`S UP";
+    updateScores();
+  
+
 }
 // Función para actualizar los puntajes en la lista
 function updateScores() {
@@ -268,11 +276,22 @@ function markCorrect() {
   nextWord();
 }
 function nextRound() {
+  nextButton.style.display = "block";
+  correctButton.style.display = "block";
+  pauseButton.style.display = "block";
+
+  timeRemaining = duracionRonda;
+
   currentRound++;
+  if (currentRound <= 3) {
+
   //iinicio la baraja
   words = [...wordsGameInitial];
   //console.log(words);
   startRound();
+  }else{
+    alert('Se acabó la partida');
+  }
 
 }
 // Función para pausar o reanudar el juego
@@ -312,10 +331,10 @@ function cargarConfiguracion() {
     var obj = JSON.parse(configuracion);
     duracionRonda = obj.duracionRonda;
     num_peliculas_series = obj.num_peliculas_series,
-    num_personajes_contemporaneos = obj.num_personajes_contemporaneos,
-    num_personajes_ficticios = obj.num_personajes_ficticios,
-    num_personajes_historicos = obj.num_personajes_historicos,
-    num_artistas = obj.num_artistas,
-    num_deportistas = obj.num_deportistas
+      num_personajes_contemporaneos = obj.num_personajes_contemporaneos,
+      num_personajes_ficticios = obj.num_personajes_ficticios,
+      num_personajes_historicos = obj.num_personajes_historicos,
+      num_artistas = obj.num_artistas,
+      num_deportistas = obj.num_deportistas
   }
 }
